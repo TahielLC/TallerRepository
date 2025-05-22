@@ -1,0 +1,2 @@
+holaa
+docker run -it -v $(pwd):/taller-refactoring -w /taller-refactoring taller-refactoring sh

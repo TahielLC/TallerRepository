@@ -1,0 +1,14 @@
+{
+  "name": "taller-refactoring",
+  "version": "1.0.0",
+  "description": "Taller de refactoring de la UNpsjb, robado de martin Fowler",
+  "main": "print-the-bill.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "author": "Tahiel",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0"
+  }
+}
