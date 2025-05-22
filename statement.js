@@ -1,13 +1,5 @@
 const createStatementData = require("./createStatementData");
 
-// exports.printTheBillText = function (invoice, plays, currency, tipo) {
-//   return printTheBill(invoice, plays, new PlanintText(currency));
-// };
-
-// exports.printTheBillHtml = function (invoice, plays, currency, tipo) {
-//   return printTheBill(invoice, plays, new HtmlStatement(currency));
-// };
-
 exports.printTheBill = function (invoice, plays, currency, type) {
   const renderer = RendererFactory.getRenderer(type, currency);
   if (!renderer) {
@@ -22,6 +14,24 @@ class StatementRenderer {
   }
   render(data) {
     throw new Error("Esto no se resuelve aqui");
+  }
+  format(value) {
+    switch (this.currency) {
+      case "USD":
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          minimumFractionDigits: 2,
+        }).format(value);
+      case "ARS":
+        return new Intl.NumberFormat("es-AR", {
+          style: "currency",
+          currency: "ARS",
+          minimumFractionDigits: 2,
+        }).format(value);
+      default:
+        return value.toFixed(2);
+    }
   }
 }
 
@@ -44,31 +54,15 @@ class PlanintText extends StatementRenderer {
 
     for (let perf of data.performances) {
       // print line for this order
-      result += `  ${perf.play.name}: ${format(perf.amount / 100, "USD")} (${
+      result += `  ${perf.play.name}: ${this.format(perf.amount / 100)} (${
         perf.audience
       } seats)\n`;
       // totalAmount += amountFor(perf);
     }
-    result += `Amount owed is ${format(data.totalAmount / 100, "USD")}\n`;
+    result += `Amount owed is ${this.format(data.totalAmount / 100)}\n`;
     result += `You earned ${data.totalVolumeCredits} credits\n`;
     return result;
   }
-}
-
-function format(aNumber, aCurrency) {
-  switch (aCurrency) {
-    case "USD":
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: aCurrency,
-        minimumFractionDigits: 2,
-      }).format(aNumber);
-    default:
-      break;
-  }
-}
-function usd(amount) {
-  return amount / 100;
 }
 
 class HtmlStatement extends StatementRenderer {
@@ -77,14 +71,14 @@ class HtmlStatement extends StatementRenderer {
     result += "<table>\n";
     result += "<tr><th>play</th><th>seats</th><th>cost</th></tr>\n";
     for (let perf of data.performances) {
-      //result += `<tr><td>${perf.play.name}</td><td>${perf.audience}</td>`;
-      //result += `<td>${usd(perf.amount)}</td></tr>\n`;
       result += `<tr><td>${perf.play.name}</td><td>${perf.audience}</td>`;
-      result += `<td>${format(perf.amount / 100, this.currency)}</td></tr>\n`;
+      result += `<td>${this.format(
+        perf.amount / 100,
+        this.currency
+      )}</td></tr>\n`;
     }
     result += "</table>\n";
-    //result += `<p>Amount owed is <em>${usd(data.totalAmount)}</em></p>\n`;
-    result += `<p>Amount owed is <em>${format(
+    result += `<p>Amount owed is <em>${this.format(
       data.totalAmount / 100,
       this.currency
     )}</em></p>\n`;
