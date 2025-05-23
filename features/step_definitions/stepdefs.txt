@@ -36,35 +36,3 @@ When("mando a imprimir el borderau en HTML", function () {
 Then("debería imprimir el borderau en HTML", function (expectedAnswer) {
   assert.equal(this.actualAnswer.trim(), expectedAnswer.trim());
 });
-
-When("mando a imprimir el borderau en pesos argentinos", function () {
-  this.actualAnswer = print.printTheBill(
-    this.invoice,
-    this.plays,
-    "ARS",
-    "text"
-  );
-});
-
-Then(
-  "debería imprimir el borderau en pesos argentinos",
-  function (expectedAnswer) {
-    assert.equal(this.actualAnswer.trim(), expectedAnswer.trim());
-  }
-);
-
-When("mando a imprimir el borderau en HTML con pesos argentinos", function () {
-  this.actualAnswer = print.printTheBill(
-    this.invoice,
-    this.plays,
-    "ARS",
-    "html"
-  );
-});
-
-Then(
-  "debería imprimir el borderau en HTML con pesos argentinos",
-  function (expectedAnswer) {
-    assert.equal(this.actualAnswer.trim(), expectedAnswer.trim());
-  }
-);

@@ -12,26 +12,29 @@ class StatementRenderer {
   constructor(currency) {
     this.currency = currency;
   }
-  render(data) {
-    throw new Error("Esto no se resuelve aqui");
-  }
   format(value) {
+    let formatted;
     switch (this.currency) {
       case "USD":
-        return new Intl.NumberFormat("en-US", {
+        formatted = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
           minimumFractionDigits: 2,
         }).format(value);
+        break;
       case "ARS":
-        return new Intl.NumberFormat("es-AR", {
+        formatted = new Intl.NumberFormat("es-AR", {
           style: "currency",
           currency: "ARS",
           minimumFractionDigits: 2,
         }).format(value);
+        // reemplazo NBSP por espacio normal:
+        formatted = formatted.replace(/\u00A0/g, " ");
+        break;
       default:
-        return value.toFixed(2);
+        formatted = value.toFixed(2);
     }
+    return formatted;
   }
 }
 

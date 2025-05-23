@@ -1,10 +1,9 @@
 # language: es
-
 Característica: Imprimir la factura de una compañía teatral
    Necesaria para liquidar el borderau
 
-Escenario: imprimr la factura de BigCo en texto plano
-   Dado el listado de la facturación de espectáculos
+  Escenario: imprimr la factura de BigCo en texto plano
+    Dado el listado de la facturación de espectáculos
       """
       {
       "customer": "BigCo",
@@ -24,7 +23,7 @@ Escenario: imprimr la factura de BigCo en texto plano
       ]
       }
       """
-   Y la lista de obras
+    Y la lista de obras
       """
       {
          "hamlet": {
@@ -41,8 +40,8 @@ Escenario: imprimr la factura de BigCo en texto plano
          }
       }
       """
-   Cuando mando a imprimir el borderau
-   Entonces debería imprimir el borderau
+    Cuando mando a imprimir el borderau
+    Entonces debería imprimir el borderau
       """
       Statement for BigCo
         Hamlet: $650.00 (55 seats)
@@ -52,8 +51,8 @@ Escenario: imprimr la factura de BigCo en texto plano
       You earned 47 credits
       """
 
-Escenario: imprimr la factura de BigCo en HTML
-   Dado el listado de la facturación de espectáculos
+  Escenario: imprimr la factura de BigCo en HTML
+    Dado el listado de la facturación de espectáculos
       """
       {
       "customer": "BigCo",
@@ -73,7 +72,7 @@ Escenario: imprimr la factura de BigCo en HTML
       ]
       }
       """
-   Y la lista de obras
+    Y la lista de obras
       """
       {
          "hamlet": {
@@ -90,8 +89,8 @@ Escenario: imprimr la factura de BigCo en HTML
          }
       }
       """
-   Cuando mando a imprimir el borderau en HTML
-   Entonces debería imprimir el borderau en HTML
+    Cuando mando a imprimir el borderau en HTML
+    Entonces debería imprimir el borderau en HTML
       """
       <h1>Statement for BigCo</h1>
       <table>
@@ -103,4 +102,3 @@ Escenario: imprimr la factura de BigCo en HTML
       <p>Amount owed is <em>$1,730.00</em></p>
       <p>You earned <em>47</em> credits</p>
       """
-
